@@ -1,0 +1,25 @@
+use gfx
+
+struct Car {
+  var x, vx
+
+  fun draw() {
+    gfx.noStroke()
+    gfx.setFillColor(200, 0, 0)
+    gfx.drawRect(x, 100, 50, 20)
+  }
+
+  fun update() {
+    x <- x+vx
+  }
+}
+
+program MovingCar {
+  var c := Car(100, 10)
+  
+  forever {
+    gfx.clear()
+    c.draw()
+    c.update()
+  }
+}

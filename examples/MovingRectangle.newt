@@ -1,0 +1,14 @@
+use gfx
+
+program MovingRectangle {
+  gfx.openWindow(1024, 768)
+
+  var x <- 100
+  var vx <- 10
+
+  forever {
+    gfx.clear()
+    gfx.drawRect(x, 100, 20, 20)
+    x <- x + vx
+  }
+}

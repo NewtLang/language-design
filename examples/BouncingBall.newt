@@ -1,0 +1,62 @@
+use gfx, random
+
+struct Ball {
+  var x, y, r : int
+  var vx, vy : int
+
+  fun draw() {
+    gfx.setFillColor(0, 0, 0)
+    gfx.drawCircle(x, y, r)
+  }
+
+  fun update() {
+    x <- x + vx
+    y <- y + vy
+    
+    if (x - r < 0) {
+      x <- -x
+      vx <- -vx
+    }
+
+    if (y - r < 0) {
+      y <- -y
+      vy <- -vy
+    }
+
+    if (x + r > gfx.screenWidth()) {
+      x <- 2*gfx.screenWidth() - x
+      vx <- -vx
+    }
+
+    if (y + r > gfx.screenHeight()) {
+      x <- 2*gfx.screenHeight() - x
+      vx <- -vx
+    }
+  }
+}
+
+fun createRandomBall() -> Ball {
+  var b <- Ball({})
+  b.r <- random.number(20, 50)
+  b.x <- random.number(r, gfx.screenWidth()-r)
+  b.y <- random.number(r, gfx.screenHeight()-r)
+  b.vx <- random.number(10, r)
+  b.vy <- random.number(10, r)
+}
+
+program BouncingBalls {
+  gfx.startWindow(1024, 768)
+
+  var balls <- [ball]
+  repeat 10 {
+    balls.add(createRandomBall())
+  }
+
+  forever {
+    gfx.clear()
+    foreach b in balls {
+      b.draw()
+      b.update()
+    }
+  }
+}
