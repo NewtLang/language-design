@@ -1,4 +1,4 @@
-use gfx
+use graphics as gfx
 
 struct Car {
   var x, vx

@@ -1,7 +1,7 @@
 Newt Language Design
 ====================
 
-This document contains informal notes on the design of the language. Below
+This repository contains informal notes on the design of the language. Below
 you can find a brief overview of the features, which are discussed in more
 detail in their respective documents.
 
@@ -31,7 +31,10 @@ no distractions, fast compilation/interpretation etc.
 
 4. **Intuition and consistency over familiarity.** Language constructs should 
 be first of all easy to understand for a beginner and consistent with each
-other. Similarity to other programming languages is less important.
+other. Similarity to other programming languages is less important. This
+includes avoiding reuse of operators and names for fundamentally different
+concepts (e.g. star operator for both multiplication and dereferencing).
+
 
 Standard Library
 ----------------
@@ -159,13 +162,6 @@ is closed (by `Ctrl-C`, `Alt-F4` or similar). Curly braces are required.
       }
     }
 
-References
-----------
-
-References are pointers but with no pointer arithmetic. References are created
-using the `&` operator, dereferencing happens with star operator and reference
-type is annotated with a star as well, eg. `*int`.
-
 Functions
 ---------
 
@@ -187,7 +183,8 @@ The arrow and return type can be ommitted if nothing is returned.
       }
     }
 
-Ideally, functions should be first-class objects.
+Ideally, functions should be first-class objects. This means passing functions
+as arguments:
 
     fun map(vals : [int], f : int -> int) -> [int] {
       var result : [int]
@@ -198,8 +195,37 @@ Ideally, functions should be first-class objects.
       return result
     }
 
+but also returning functions as results:
+
+    fun createCounter(start : int) -> (()->int) {
+      var counter <- start
+      return fun() -> int {
+        counter <- counter + 1
+        return counter
+      }
+    }
+
 Functions are pass-by-value, so you need to explicitly pass a reference
 if you want to operate on the actual variable and not its copy.
+
+References
+----------
+
+References are pointers but with no pointer arithmetic. References are created
+using the `?` operator, dereferencing is done using the `!` operator. Reference
+type is annotated with the `?` operator.
+  
+    use console
+
+    fun increment(n : ?int) {
+      !n <- !n + 1
+    }
+
+    program IncrementExample {
+      var x <- 5
+      increment(?x)
+      console.writeln(x)
+    }
 
 Structs
 -------
@@ -327,4 +353,13 @@ You can combine several use clauses into one:
 
     program PowerExample2 {
       console.writeln(power(2,5)) // => 32
+    }
+
+You can also create an alias:
+
+    use graphics as gfx
+
+    program Circle {
+      gfx.startWindow(800, 800)
+      gfx.drawCircle(400, 400, 50)
     }

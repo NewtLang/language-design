@@ -14,12 +14,12 @@ Used for CLI applications. Allows for easy printing to the standard output
 functions like `write`, `writeln`, `writef`, `readInteger`, `readLine`,
 `readf` etc.
 
-`io`
+`filesystem`
 ----
-Input/output module. Handles reading and writing files, both text and binary,
-reading and modifying filesystem structure.
+Handles reading and writing files, both text and binary, reading and modifying 
+filesystem structure etc.
 
-`gfx`
+`graphics`
 -----
 2D graphics module, capable of drawing simple shapes, loading and displaying
 sprites from graphics files etc.
@@ -32,7 +32,7 @@ Handles input from mouse, keyboard and gaming devices.
 -------
 Handles audio output (and maybe input).
 
-`net`
+`network`
 -----
 Sockets.
 
@@ -40,7 +40,7 @@ Sockets.
 -----
 Simple web server framework.
 
-`sql`
+`database`
 -----
 Database bindings. Probably limited to sqlite, at least at the start.
 
