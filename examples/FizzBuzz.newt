@@ -1,0 +1,15 @@
+use console
+
+program FizzBuzz {
+  foreach n in range(1,100) {
+    if n % 15 == 0 {
+      console.writeln('FizzBuzz')
+    } else if n % 5 == 0 {
+      console.writeln('Buzz')
+    } else if n % 3 == 0 {
+      console.writeln('Fizz')
+    } else {
+      console.writeln(n)
+    }
+  }
+}
